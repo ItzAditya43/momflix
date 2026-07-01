@@ -71,6 +71,29 @@ function App() {
         aria-hidden="true"
       />
 
+      {/* Desktop Sidebar (hidden on mobile/tablet) */}
+      <aside className="sidebar">
+        <div className="sidebar-brand">
+          <span className="sidebar-brand-heart">💕</span>MomFlix
+        </div>
+        <nav className="sidebar-nav">
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className={`sidebar-link ${item.match(location.pathname) ? 'active' : ''}`}
+            >
+              <span className="sidebar-icon">{item.icon}</span>
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="sidebar-footer">
+          Made for you, Mom 💗
+        </div>
+      </aside>
+
+      {/* Top Navbar (mobile + tablet) */}
       <nav className="navbar">
         <Link to="/" className="navbar-brand">
           <span className="brand-heart">💕</span>Mom<span>Flix</span>
@@ -88,6 +111,7 @@ function App() {
         </div>
       </nav>
 
+      {/* Main Content */}
       <main className="main-content" key={location.pathname}>
         <div className="route-fade">
           <Routes>
@@ -107,6 +131,7 @@ function App() {
         </div>
       </main>
 
+      {/* Bottom Navigation (mobile only) */}
       <nav className="bottom-nav" ref={navRef}>
         <div
           className={`bottom-nav-pill ${pill.ready ? 'ready' : ''}`}

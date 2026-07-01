@@ -72,16 +72,15 @@ function Player() {
 
       {/* Player Controls */}
       <div className="player-controls">
-        <label>
+        <label className="player-control-label">
           <input
             type="checkbox"
             checked={autoplay}
             onChange={(e) => setAutoplay(e.target.checked)}
-            style={{ marginRight: 4 }}
           />
           Autoplay
         </label>
-        <label>
+        <label className="player-control-label">
           Subtitles:
           <select value={subtitle} onChange={(e) => setSubtitle(e.target.value)}>
             <option value="en">English</option>
@@ -102,11 +101,9 @@ function Player() {
         <div className="section">
           <div className="section-header">
             <div>
-              <h2 className="section-title" style={{ fontSize: 24 }}>
-                {item.title}
-              </h2>
+              <h2 className="player-title-section">{item.title}</h2>
               {!isMovie && (
-                <p style={{ color: 'var(--text-muted)', marginTop: 4 }}>
+                <p className="player-episode-info">
                   Season {season} · Episode {episode}
                 </p>
               )}
@@ -115,7 +112,7 @@ function Player() {
               📋 Details
             </Link>
           </div>
-          <p style={{ color: '#aaa', lineHeight: 1.6 }}>{item.overview}</p>
+          <p className="player-overview">{item.overview}</p>
         </div>
       )}
     </div>

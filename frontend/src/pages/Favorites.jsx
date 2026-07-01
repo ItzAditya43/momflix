@@ -41,7 +41,7 @@ function Favorites() {
       <div className="section-header">
         <h2 className="section-title">❤️ My Favorites</h2>
         {favorites.length > 0 && (
-          <span style={{ color: 'var(--text-muted)' }}>
+          <span className="favorites-count">
             {favorites.length} saved
           </span>
         )}
@@ -51,17 +51,17 @@ function Favorites() {
         <div className="empty-state">
           <h3>No favorites yet</h3>
           <p>Browse movies and shows and click the ❤️ to save them here</p>
-          <Link to="/" className="btn btn-primary" style={{ marginTop: 20, textDecoration: 'none' }}>
+          <Link to="/" className="btn btn-primary">
             🏠 Browse Now
           </Link>
         </div>
       ) : (
         <div className="grid">
           {favorites.map((item) => (
-            <div key={item.id} className="card" style={{ position: 'relative' }}>
+            <div key={item.id} className="card">
               <Link
                 to={`/${item.media_type}/${item.id}`}
-                style={{ textDecoration: 'none', color: 'inherit' }}
+                className="card-link"
               >
                 {item.poster_path ? (
                   <img

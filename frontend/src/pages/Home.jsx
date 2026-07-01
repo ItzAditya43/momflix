@@ -34,11 +34,11 @@ function Home() {
 
   return (
     <div>
-      <div className="section" style={{ marginBottom: 28 }}>
-        <h1 className="text-gradient" style={{ fontSize: 30, fontWeight: 800, letterSpacing: '-0.5px' }}>
-          Made for you, Mom <span style={{ filter: 'drop-shadow(0 0 10px rgba(255,95,162,0.6))' }}>💕</span>
+      <div className="section">
+        <h1 className="hero-greeting">
+          Made for you, Mom <span className="hero-heart">💕</span>
         </h1>
-        <p style={{ color: 'var(--text-muted)', marginTop: 6 }}>
+        <p className="hero-subtitle">
           Simple. Beautiful. Just for you. 💗
         </p>
       </div>

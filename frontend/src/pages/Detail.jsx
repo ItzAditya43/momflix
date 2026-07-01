@@ -116,7 +116,7 @@ function Detail() {
           {item.poster ? (
             <img className="detail-poster" src={item.poster} alt={item.title} />
           ) : (
-            <div className="detail-poster" style={{ background: '#222', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 60 }}>
+            <div className="detail-poster-placeholder">
               🎬
             </div>
           )}
@@ -158,13 +158,13 @@ function Detail() {
             <div className="cast-grid">
               {item.cast.map((c, i) => (
                 <div key={i} className="cast-card">
-                  {c.photo ? (
-                    <img className="cast-photo" src={c.photo} alt={c.name} />
-                  ) : (
-                    <div className="cast-photo" style={{ background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30 }}>
-                      🎭
-                    </div>
-                  )}
+                   {c.photo ? (
+                     <img className="cast-photo" src={c.photo} alt={c.name} />
+                   ) : (
+                     <div className="cast-photo-placeholder">
+                       🎭
+                     </div>
+                   )}
                   <div className="cast-name">{c.name}</div>
                   <div className="cast-character">{c.character}</div>
                 </div>
@@ -199,13 +199,13 @@ function Detail() {
                     className="episode-item"
                     onClick={() => handleWatchEpisode(ep)}
                   >
-                    {ep.still_path ? (
-                      <img className="episode-still" src={ep.still_path} alt={ep.name} />
-                    ) : (
-                      <div className="episode-still" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30, background: '#1a1a2e' }}>
-                        📺
-                      </div>
-                    )}
+                     {ep.still_path ? (
+                       <img className="episode-still" src={ep.still_path} alt={ep.name} />
+                     ) : (
+                       <div className="episode-still-placeholder">
+                         📺
+                       </div>
+                     )}
                     <div className="episode-info">
                       <div className="episode-number">Episode {ep.episode_number}</div>
                       <div className="episode-name">{ep.name}</div>
@@ -215,7 +215,7 @@ function Detail() {
                 ))}
               </div>
             ) : (
-              <div className="empty-state" style={{ padding: 20 }}>
+              <div className="empty-state">
                 <p>No episode information available</p>
               </div>
             )}
