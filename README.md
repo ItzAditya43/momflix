@@ -1,4 +1,4 @@
-# MomFlix - A Movie Streaming App
+# MomFlix - A Movie App
 
 A beautiful, glassmorphism-designed movie and TV show streaming application built with React, Express, and SQLite. Created with love for my mom 💕
 
