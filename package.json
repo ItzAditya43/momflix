@@ -1,0 +1,10 @@
+{
+  "name": "momflix",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx concurrently \"cd backend && node server.js\" \"cd frontend && npm run dev\"",
+    "dev:backend": "cd backend && node server.js",
+    "dev:frontend": "cd frontend && npm run dev"
+  }
+}
