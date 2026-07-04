@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getMovie, getTV, updateContinueWatching } from '../api';
 
@@ -9,6 +9,15 @@ function Player() {
   const [loading, setLoading] = useState(true);
   const [autoplay, setAutoplay] = useState(true);
   const [subtitle, setSubtitle] = useState('en');
+
+  const playerContainerRef = useRef(null);
+
+  const handleFullscreen = () => {
+    const el = playerContainerRef.current;
+    if (!el) return;
+    if (el.requestFullscreen) el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  };
 
   useEffect(() => {
     const load = async () => {
@@ -60,14 +69,16 @@ function Player() {
   return (
     <div>
       {/* Player */}
-      <div className="player-container">
+      <div className="player-container" ref={playerContainerRef}>
         <iframe
           className="player-iframe"
           src={finalUrl}
-          allowFullScreen
-          allow="autoplay; encrypted-media; fullscreen"
+          allow="autoplay; encrypted-media; picture-in-picture"
           title={item?.title || 'Player'}
         />
+        <button className="custom-fullscreen-btn" onClick={handleFullscreen}>
+          ⛶
+        </button>
       </div>
 
       {/* Player Controls */}
