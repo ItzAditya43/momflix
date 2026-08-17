@@ -8,7 +8,7 @@
 
 :root {
   /* Surfaces */
-  --bg-base: #0d0716;
+  --bg-base: #0F1E1E;
   --glass-fill: rgba(255, 255, 255, 0.06);
   --glass-fill-strong: rgba(255, 255, 255, 0.10);
   --glass-border: 1px solid rgba(255, 255, 255, 0.14);
@@ -17,23 +17,23 @@
 
   /* Premium gradient border trick */
   --glass-border-premium:
-    linear-gradient(#0d0716, #0d0716) padding-box,
-    linear-gradient(135deg, #ff2d8c, #a855f7) border-box;
+    linear-gradient(#0F1E1E, #0F1E1E) padding-box,
+    linear-gradient(135deg, #FF5E5B, #00CECB) border-box;
 
   /* Backdrop blur */
   --blur: blur(20px) saturate(160%);
   --blur-sm: blur(10px) saturate(140%);
 
   /* Brand */
-  --pink-1: #ff2d8c;
-  --pink-2: #ff8fc9;
-  --violet: #a855f7;
-  --gold: #ffd27a;
+  --pink-1: #FF5E5B;
+  --pink-2: #00CECB;
+  --violet: #00CECB;
+  --gold: #FFED66;
 
   /* Text */
-  --text: #fff5fa;
-  --text-muted: #baa7c4;
-  --text-faint: #8a7a93;
+  --text: #F0FFFA;
+  --text-muted: #9FB8B5;
+  --text-faint: #6B8A87;
 
   /* Radii */
   --radius-lg: 24px;
@@ -42,8 +42,8 @@
   --radius-pill: 999px;
 
   /* Glows + shadows */
-  --glow-sm: 0 0 20px rgba(255, 45, 140, 0.30);
-  --glow-lg: 0 0 50px rgba(255, 45, 140, 0.45);
+  --glow-sm: 0 0 20px rgba(255, 94, 91, 0.30);
+  --glow-lg: 0 0 50px rgba(255, 94, 91, 0.45);
   --shadow-elev: 0 20px 50px rgba(0, 0, 0, 0.55);
   --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.35);
 
@@ -54,8 +54,8 @@
   --t-slow: 0.6s var(--ease);
 
   /* Gradients */
-  --grad-text: linear-gradient(135deg, #ffffff 0%, #ffd6ec 100%);
-  --grad-primary: linear-gradient(135deg, #ff2d8c 0%, #ff6fb0 50%, #a855f7 100%);
+  --grad-text: linear-gradient(135deg, #F0FFFA 0%, #9FB8B5 100%);
+  --grad-primary: linear-gradient(135deg, #FF5E5B 0%, #FF8C86 50%, #00CECB 100%);
   --grad-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
 }
 

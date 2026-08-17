@@ -187,10 +187,10 @@ function Search() {
   );
 
   return (
-    <div className="search-page">
-      <form className="search-bar" onSubmit={handleSubmit} role="search">
-        <div className="search-wrap">
-          <span className="search-icon-left" aria-hidden="true">🔍</span>
+    <div className="search-page" style={{ background: 'var(--bg)', minHeight: '100vh' }}>
+      <form className="search-bar" onSubmit={handleSubmit} role="search" style={{ background: 'rgba(15, 30, 30, 0.8)', padding: '20px', borderRadius: '20px', marginBottom: '24px' }}>
+        <div className="search-wrap" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+          <span className="search-icon-left" aria-hidden="true" style={{ color: 'var(--text-muted)', marginRight: '12px' }}>🔍</span>
           <input
             className="search-input"
             type="text"
@@ -199,14 +199,34 @@ function Search() {
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
             aria-label="Search movies and TV shows"
+            style={{
+              flex: 1,
+              padding: '16px 22px',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '12px',
+              background: 'rgba(255, 255, 255, 0.05)',
+              color: 'var(--text)',
+              fontSize: '18px',
+              outline: 'none',
+              transition: 'all 0.25s ease',
+            }}
           />
-          {loading && <span className="search-spinner" aria-label="Loading" />}
+          {loading && <span className="search-spinner" aria-label="Loading" style={{ color: 'var(--primary)' }} />}
           {query && !loading && (
             <button
               type="button"
               className="search-clear"
               onClick={handleClear}
               aria-label="Clear search"
+              style={{
+                position: 'absolute',
+                right: '12px',
+                background: 'none',
+                border: 'none',
+                color: 'var(--text-muted)',
+                cursor: 'pointer',
+                fontSize: '20px',
+              }}
             >
               ✕
             </button>
@@ -216,14 +236,24 @@ function Search() {
 
       {/* Recent searches */}
       {showInitial && recent.length > 0 && (
-        <div className="recent-row">
-          <span className="recent-label">Recent</span>
+        <div className="recent-row" style={{ marginBottom: '16px' }}>
+          <span className="recent-label" style={{ color: 'var(--text-muted)', fontSize: '12px', marginBottom: '8px', display: 'block' }}>Recent</span>
           {recent.map((term) => (
-            <span key={term} className="recent-chip">
+            <span key={term} className="recent-chip" style={{ marginRight: '8px' }}>
               <button
                 type="button"
                 className="recent-chip-label"
                 onClick={() => handleClickRecent(term)}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 94, 91, 0.3)',
+                  color: 'var(--text)',
+                  padding: '8px 14px',
+                  borderRadius: '20px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  transition: 'all 0.25s ease',
+                }}
               >
                 {term}
               </button>
@@ -232,6 +262,14 @@ function Search() {
                 className="recent-chip-remove"
                 onClick={() => handleRemoveRecent(term)}
                 aria-label={`Remove ${term}`}
+                style={{
+                  marginLeft: '8px',
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                }}
               >
                 ✕
               </button>
@@ -241,6 +279,17 @@ function Search() {
             type="button"
             className="recent-clear-all"
             onClick={handleClearAllRecent}
+            style={{
+              marginLeft: 'auto',
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid rgba(255, 94, 91, 0.3)',
+              color: 'var(--text-muted)',
+              padding: '8px 14px',
+              borderRadius: '20px',
+              fontSize: '12px',
+              fontWeight: '600',
+              transition: 'all 0.25s ease',
+            }}
           >
             Clear all
           </button>
@@ -249,17 +298,27 @@ function Search() {
 
       {/* Popular fallback */}
       {showInitial && (
-        <div className="section">
-          <div className="section-header">
-            <h2 className="section-title">Popular Searches</h2>
+        <div className="section" style={{ marginBottom: '24px' }}>
+          <div className="section-header" style={{ marginBottom: '12px' }}>
+            <h2 className="section-title" style={{ color: 'var(--text)', fontSize: '20px' }}>Popular Searches</h2>
           </div>
-          <div className="recent-row" style={{ marginTop: 0 }}>
+          <div className="recent-row" style={{ marginTop: 0, gap: '8px' }}>
             {POPULAR.map((term) => (
               <button
                 type="button"
                 key={term}
                 className="popular-chip"
                 onClick={() => handleClickPopular(term)}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 94, 91, 0.3)',
+                  color: 'var(--text)',
+                  padding: '8px 16px',
+                  borderRadius: '20px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  transition: 'all 0.25s ease',
+                }}
               >
                 {term}
               </button>
@@ -270,17 +329,17 @@ function Search() {
 
       {/* Loading skeleton */}
       {loading && (
-        <div className="section">
-          <div className="section-header">
-            <h2 className="section-title">Searching…</h2>
+        <div className="section" style={{ marginBottom: '24px' }}>
+          <div className="section-header" style={{ marginBottom: '12px' }}>
+            <h2 className="section-title" style={{ color: 'var(--text)', fontSize: '20px' }}>Searching…</h2>
           </div>
-          <div className="grid">
+          <div className="grid" style={{ gap: '12px' }}>
             {skeletonKeys.map((k) => (
-              <div key={k} className="card skeleton-card" aria-hidden="true">
-                <div className="card-poster skeleton-poster" />
-                <div className="card-body">
-                  <div className="skeleton-line skeleton-line-title" />
-                  <div className="skeleton-line skeleton-line-meta" />
+              <div key={k} className="card skeleton-card" aria-hidden="true" style={{ background: 'var(--bg-card)', borderRadius: '12px', height: '120px' }}>
+                <div className="card-poster skeleton-poster" style={{ width: '100%', height: '60px', background: '#241633', borderRadius: '8px' }} />
+                <div className="card-body" style={{ padding: '8px' }}>
+                  <div className="skeleton-line skeleton-line-title" style={{ width: '70%', height: '12px', background: 'rgba(255, 255, 255, 0.1)', marginBottom: '8px' }} />
+                  <div className="skeleton-line skeleton-line-meta" style={{ width: '50%', height: '10px', background: 'rgba(255, 255, 255, 0.08)' }} />
                 </div>
               </div>
             ))}
@@ -290,27 +349,35 @@ function Search() {
 
       {/* No results */}
       {noResults && (
-        <div className="empty-state">
-          <h3>No results found</h3>
-          <p>Try a different search term</p>
+        <div className="empty-state" style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text-muted)' }}>
+          <h3 style={{ color: 'var(--text)', marginBottom: '12px' }}>No results found</h3>
+          <p style={{ color: 'var(--text-muted)' }}>Try a different search term</p>
         </div>
       )}
 
       {/* Results */}
       {!loading && results.length > 0 && (
-        <div className="section">
-          <div className="section-header">
+        <div className="section" style={{ marginBottom: '30px' }}>
+          <div className="section-header" style={{ marginBottom: '12px' }}>
             <h2 className="section-title">
-              Results for <span className="section-title-accent">"{q || query}"</span>
+              Results for <span className="section-title-accent" style={{ color: 'var(--primary)' }}>{q || query}</span>
             </h2>
-            <span className="section-count">{results.length} found</span>
+            <span className="section-count" style={{ color: 'var(--text-muted)', fontSize: '14px' }}>{results.length} found</span>
           </div>
-          <div className="grid grid-stagger">
+          <div className="grid grid-stagger" style={{ gap: '16px' }}>
             {results.map((item) => (
               <Link
                 key={`${item.id}-${item.media_type}`}
                 to={`/${item.media_type}/${item.id}`}
-                className="card stagger-item"
+                style={{
+                  position: 'relative',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--glass-border)',
+                }}
               >
                 {item.poster ? (
                   <img
@@ -318,14 +385,19 @@ function Search() {
                     src={item.poster}
                     alt={item.title}
                     loading="lazy"
+                    style={{ width: '100%', height: 'auto', aspectRatio: '2/3', objectFit: 'cover' }}
                   />
                 ) : (
-                  <div className="card-poster-placeholder">🎬</div>
+                  <div className="card-poster-placeholder" style={{ width: '100%', height: 'auto', aspectRatio: '2/3', background: '#241633', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '44px' }}>
+                    🎬
+                  </div>
                 )}
-                <div className="card-rating">★ {item.vote_average?.toFixed(1)}</div>
-                <div className="card-body">
-                  <div className="card-title">{item.title}</div>
-                  <div className="card-year">
+                <div className="card-rating" style={{ position: 'absolute', top: '10px', right: '10px', background: 'rgba(20, 12, 30, 0.75)', backdropFilter: 'blur(6px)', padding: '4px 9px', borderRadius: '999px', fontSize: '12px', fontWeight: '700', color: 'var(--gold)', border: '1px solid rgba(255, 210, 122, 0.3)' }}>
+                  ★ {item.vote_average?.toFixed(1)}
+                </div>
+                <div className="card-body" style={{ padding: '12px 14px 14px' }}>
+                  <div className="card-title" style={{ fontSize: '15px', fontWeight: '700', marginBottom: '4px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title}</div>
+                  <div className="card-year" style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
                     {item.year} · {item.media_type === 'movie' ? 'Movie' : 'TV'}
                   </div>
                 </div>
@@ -337,9 +409,9 @@ function Search() {
 
       {/* Pre-search empty state when no recents */}
       {!searched && !loading && recent.length === 0 && (
-        <div className="empty-state">
-          <h3>🔍 Search Movies & TV Shows</h3>
-          <p>Type something above to find what you want to watch</p>
+        <div className="empty-state" style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text-muted)' }}>
+          <h3 style={{ color: 'var(--text)', marginBottom: '12px' }}>🔍 Search Movies & TV Shows</h3>
+          <p style={{ color: 'var(--text-muted)' }}>Type something above to find what you want to watch</p>
         </div>
       )}
     </div>

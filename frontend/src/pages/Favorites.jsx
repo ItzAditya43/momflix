@@ -37,60 +37,80 @@ function Favorites() {
   }
 
   return (
-    <div>
-      <div className="section-header">
-        <h2 className="section-title">❤️ My Favorites</h2>
-        {favorites.length > 0 && (
-          <span className="favorites-count">
-            {favorites.length} saved
-          </span>
+    <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
+      <div style={{ padding: '20px' }}>
+        <div style={{ marginBottom: '24px' }}>
+          <h2 className="section-title" style={{ color: 'var(--text)', fontSize: '22px' }}>❤️ My Favorites</h2>
+        </div>
+
+        {favorites.length === 0 ? (
+          <div className="empty-state" style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text-muted)' }}>
+            <h3 style={{ color: 'var(--text)', marginBottom: '12px' }}>No favorites yet</h3>
+            <p style={{ color: 'var(--text-muted)' }}>Browse movies and shows and click the ❤️ to save them here</p>
+            <Link to="/" style={{ display: 'inline-block', marginTop: '20px', textDecoration: 'none', background: 'rgba(255, 94, 91, 0.2)', padding: '12px 24px', borderRadius: '25px', color: 'var(--primary)' }}>
+              🏠 Browse Now
+            </Link>
+          </div>
+        ) : (
+          <div className="grid" style={{ gap: '16px' }}>
+            {favorites.map((item) => (
+              <div key={item.id} style={{ position: 'relative', background: 'var(--bg-card)', border: '1px solid var(--glass-border)', borderRadius: '16px', overflow: 'hidden' }}>
+                <Link
+                  to={`/${item.media_type}/${item.id}`}
+                  style={{
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
+                >
+                  {item.poster_path ? (
+                    <img
+                      style={{ width: '100%', height: 'auto', aspectRatio: '2/3', objectFit: 'cover' }}
+                      src={item.poster_path}
+                      alt={item.title}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div style={{ width: '100%', height: 'auto', aspectRatio: '2/3', background: '#241633', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      🎬
+                    </div>
+                  )}
+                  <div style={{ padding: '12px 14px' }}>
+                    <div className="card-title" style={{ fontSize: '15px', fontWeight: '700', marginBottom: '4px' }}>{item.title}</div>
+                    <div className="card-year" style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
+                      {item.media_type === 'movie' ? 'Movie' : 'TV Series'}
+                    </div>
+                  </div>
+                </Link>
+                <button
+                  className="card-fav-btn active"
+                  onClick={() => handleRemove(item.id)}
+                  style={{
+                    position: 'absolute',
+                    top: '10px',
+                    left: '10px',
+                    background: 'rgba(20, 12, 30, 0.75)',
+                    backdropFilter: 'blur(6px)',
+                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                    color: 'white',
+                    width: '34px',
+                    height: '34px',
+                    borderRadius: '50%',
+                    cursor: 'pointer',
+                    fontSize: '16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'all 0.25s ease',
+                  }}
+                  title="Remove from favorites"
+                >
+                  ❤️
+                </button>
+              </div>
+            ))}
+          </div>
         )}
       </div>
-
-      {favorites.length === 0 ? (
-        <div className="empty-state">
-          <h3>No favorites yet</h3>
-          <p>Browse movies and shows and click the ❤️ to save them here</p>
-          <Link to="/" className="btn btn-primary">
-            🏠 Browse Now
-          </Link>
-        </div>
-      ) : (
-        <div className="grid">
-          {favorites.map((item) => (
-            <div key={item.id} className="card">
-              <Link
-                to={`/${item.media_type}/${item.id}`}
-                className="card-link"
-              >
-                {item.poster_path ? (
-                  <img
-                    className="card-poster"
-                    src={item.poster_path}
-                    alt={item.title}
-                    loading="lazy"
-                  />
-                ) : (
-                  <div className="card-poster-placeholder">🎬</div>
-                )}
-                <div className="card-body">
-                  <div className="card-title">{item.title}</div>
-                  <div className="card-year">
-                    {item.media_type === 'movie' ? 'Movie' : 'TV Series'}
-                  </div>
-                </div>
-              </Link>
-              <button
-                className="card-fav-btn active"
-                onClick={() => handleRemove(item.id)}
-                title="Remove from favorites"
-              >
-                ❤️
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }

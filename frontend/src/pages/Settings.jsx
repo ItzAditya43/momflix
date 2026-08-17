@@ -3,20 +3,34 @@ import { clearContinueWatching, clearFavorites, clearAllData } from '../api';
 
 function ConfirmModal({ title, text, onConfirm, onCancel, danger }) {
   return (
-    <div className="modal-overlay" onClick={onCancel}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-title">{title}</div>
-        <div className="modal-text">{text}</div>
-        <div className="modal-actions">
-          <button className="btn btn-secondary" onClick={onCancel}>
-            Cancel
-          </button>
-          <button
-            className={`btn ${danger ? 'btn-danger' : 'btn-primary'}`}
-            onClick={onConfirm}
-          >
-            Confirm
-          </button>
+    <div>
+      <div style={{
+        position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+        background: 'rgba(0, 0, 0, 0.7)', backdropFilter: 'blur(4px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+      }}>
+        <div style={{
+          background: 'var(--bg-card)', border: '1px solid var(--glass-border)',
+          borderRadius: '16px', padding: '32px', width: '90%', maxWidth: '400px',
+          textAlign: 'center', color: 'var(--text)'
+        }}>
+          <div style={{ marginBottom: '24px' }}>
+            <h3 style={{ color: 'var(--primary)', marginBottom: '16px' }}>{title}</h3>
+            <p style={{ marginBottom: '24px', color: 'var(--text-muted)' }}>{text}</p>
+          </div>
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+            <button style={{
+              background: 'none', border: '1px solid var(--glass-border)',
+              color: 'var(--text)', padding: '12px 24px', borderRadius: '12px',
+              cursor: 'pointer', transition: 'all 0.25s ease', width: '120px'
+            }} onClick={onCancel}>Cancel</button>
+            <button style={{
+              background: danger ? 'rgba(255, 94, 91, 0.2)' : 'rgba(255, 255, 255, 0.08)',
+              border: danger ? '1px solid rgba(255, 94, 91, 0.3)' : '1px solid var(--glass-border)',
+              color: danger ? 'var(--primary)' : 'var(--text)', padding: '12px 24px',
+              borderRadius: '12px', cursor: 'pointer', transition: 'all 0.25s ease', width: '120px'
+            }} onClick={onConfirm}>{danger ? 'Clear' : 'Confirm'}</button>
+          </div>
         </div>
       </div>
     </div>
@@ -27,7 +41,7 @@ function Settings() {
   const [modal, setModal] = useState(null);
   const [toasts, setToasts] = useState([]);
 
-  const showToast = (message, icon = '✅') => {
+  const showToast = (message, icon) => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, message, icon }]);
     setTimeout(() => {
@@ -38,9 +52,9 @@ function Settings() {
   const handleClearContinueWatching = async () => {
     try {
       await clearContinueWatching();
-      showToast('Continue watching history cleared', '🗑️');
+      showToast('Continue watching history cleared', 'OK');
     } catch (err) {
-      showToast('Failed to clear data', '❌');
+      showToast('Failed to clear data', 'ERR');
     }
     setModal(null);
   };
@@ -48,9 +62,9 @@ function Settings() {
   const handleClearFavorites = async () => {
     try {
       await clearFavorites();
-      showToast('All favorites cleared', '🗑️');
+      showToast('All favorites cleared', 'OK');
     } catch (err) {
-      showToast('Failed to clear favorites', '❌');
+      showToast('Failed to clear favorites', 'ERR');
     }
     setModal(null);
   };
@@ -58,21 +72,32 @@ function Settings() {
   const handleClearAll = async () => {
     try {
       await clearAllData();
-      showToast('All data cleared successfully', '✨');
+      showToast('All data cleared successfully', 'OK');
     } catch (err) {
-      showToast('Failed to clear data', '❌');
+      showToast('Failed to clear data', 'ERR');
     }
     setModal(null);
   };
 
+  const openModal = (title, text, danger, onConfirm) => {
+    setModal({ title, text, danger, onConfirm });
+  };
+
   return (
-    <div className="settings-page">
+    <div style={{ background: 'var(--bg)', minHeight: '100vh', padding: '20px' }}>
       {/* Toast container */}
       {toasts.length > 0 && (
-        <div className="toast-container">
+        <div style={{
+          position: 'fixed', bottom: '20px', left: '20px', right: '20px',
+          display: 'flex', gap: '12px', zIndex: 1000
+        }}>
           {toasts.map((t) => (
-            <div key={t.id} className="toast">
-              <span className="toast-icon">{t.icon}</span>
+            <div key={t.id} style={{
+              background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '8px', padding: '12px 20px', color: 'var(--text)',
+              display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px'
+            }}>
+              <span style={{ color: 'var(--primary)' }}>{t.icon}</span>
               {t.message}
             </div>
           ))}
@@ -90,71 +115,57 @@ function Settings() {
         />
       )}
 
-      <div className="section">
-        <div className="section-header">
-          <h2 className="section-title">⚙️ Settings</h2>
+      <div style={{ marginBottom: '32px' }}>
+        <div style={{ marginBottom: '16px' }}>
+          <h2 style={{ color: 'var(--text)', fontSize: '24px', marginBottom: '16px' }}>Settings</h2>
         </div>
       </div>
 
       {/* Data Management */}
-      <div className="settings-group">
-        <div className="settings-group-title">🗂️ Data Management</div>
-        <div className="settings-group-desc">
-          Manage your local data including favorites and watch history. These actions cannot be undone.
+      <div style={{ marginBottom: '24px' }}>
+        <div style={{ marginBottom: '12px' }}>
+          <h3 style={{ color: 'var(--text)', fontSize: '16px', marginBottom: '8px' }}>Data Management</h3>
+          <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>
+            Manage your local data including favorites and watch history. These actions cannot be undone.
+          </p>
         </div>
-        <div className="settings-actions">
-          <button
-            className="btn btn-shimmer"
-            onClick={() =>
-              setModal({
-                title: 'Clear Watch History',
-                text: 'This will remove all your continue watching progress. Your favorites will be kept.',
-                danger: false,
-                onConfirm: handleClearContinueWatching,
-              })
-            }
-          >
-            🗑️ Clear Watch History
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px' }}>
+          <button style={{
+            background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 94, 91, 0.3)',
+            color: 'var(--text)', padding: '12px 24px', borderRadius: '12px',
+            cursor: 'pointer', transition: 'all 0.25s ease', width: '100%'
+          }} onClick={() => openModal('Clear Watch History', 'This will remove all your continue watching progress. Your favorites will be kept.', false, handleClearContinueWatching)}>
+            Clear Watch History
           </button>
 
-          <button
-            className="btn btn-shimmer"
-            onClick={() =>
-              setModal({
-                title: 'Clear Favorites',
-                text: 'This will remove all your saved favorites. Watch history will be kept.',
-                danger: false,
-                onConfirm: handleClearFavorites,
-              })
-            }
-          >
-            💔 Clear All Favorites
+          <button style={{
+            background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 94, 91, 0.3)',
+            color: 'var(--text)', padding: '12px 24px', borderRadius: '12px',
+            cursor: 'pointer', transition: 'all 0.25s ease', width: '100%'
+          }} onClick={() => openModal('Clear Favorites', 'This will remove all your saved favorites. Watch history will be kept.', false, handleClearFavorites)}>
+            Clear All Favorites
           </button>
 
-          <button
-            className="btn btn-danger"
-            onClick={() =>
-              setModal({
-                title: '⚠️ Clear All Data',
-                text: 'This will permanently delete ALL your data including favorites and watch history. This cannot be undone!',
-                danger: true,
-                onConfirm: handleClearAll,
-              })
-            }
-          >
-            🧹 Clear Everything
+          <button style={{
+            background: 'rgba(255, 94, 91, 0.1)', border: '1px solid rgba(255, 94, 91, 0.2)',
+            color: 'var(--primary)', padding: '12px 24px', borderRadius: '12px',
+            cursor: 'pointer', transition: 'all 0.25s ease', width: '100%'
+          }} onClick={() => openModal('Clear All Data', 'This will permanently delete ALL your data including favorites and watch history. This cannot be undone!', true, handleClearAll)}>
+            Clear Everything
           </button>
         </div>
       </div>
 
       {/* About */}
-      <div className="settings-group">
-        <div className="settings-group-title">💕 About MomFlix</div>
-        <div className="settings-group-desc">
-          A beautiful streaming app made with love. Browse movies and TV shows, save favorites, and pick up where you left off.
+      <div style={{ marginTop: '32px' }}>
+        <div style={{ marginBottom: '12px' }}>
+          <h3 style={{ color: 'var(--text)', fontSize: '16px', marginBottom: '8px' }}>About MomFlix</h3>
+          <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>
+            A beautiful streaming app made with love. Browse movies and TV shows, save favorites, and pick up where you left off.
+          </p>
         </div>
         <div style={{ fontSize: 14, color: 'var(--text-muted)' }}>
-          Made for you, Mom 💗
+          Made for you, Mom
         </div>
       </div>
     </div>
