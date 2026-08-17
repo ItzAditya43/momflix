@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getMovie, getTV, getSeason, getFavorites, addFavorite, removeFavorite } from '../api';
+import Icon from '../components/Icons';
 
 function Detail() {
   const { id } = useParams();
@@ -117,7 +118,7 @@ function Detail() {
             <img className="detail-poster" src={item.poster} alt={item.title} />
           ) : (
             <div className="detail-poster-placeholder">
-              🎬
+              <Icon name="film" size={48} />
             </div>
           )}
           <div className="detail-info">
@@ -125,7 +126,7 @@ function Detail() {
             <div className="detail-meta">
               <span>{item.year}</span>
               {item.runtime && <span>{item.runtime} min</span>}
-              <span className="rating">★ {item.vote_average?.toFixed(1)}</span>
+              <span className="rating"><Icon name="star" size={12} /> {item.vote_average?.toFixed(1)}</span>
               <span>{isMovie ? 'Movie' : 'TV Series'}</span>
             </div>
             {item.genres?.length > 0 && (
@@ -138,14 +139,14 @@ function Detail() {
             <p className="detail-overview">{item.overview}</p>
             <div className="detail-actions">
               <button className="btn btn-primary" onClick={handleWatch}>
-                ▶️ {isMovie ? 'Watch Now' : 'Watch Season'}
+                <Icon name="play" size={16} /> {isMovie ? 'Watch Now' : 'Watch Season'}
               </button>
               <button
                 className={`btn btn-icon ${isFav ? 'active' : ''}`}
                 onClick={toggleFav}
                 title={isFav ? 'Remove from favorites' : 'Add to favorites'}
               >
-                {isFav ? '❤️' : '🤍'}
+                <Icon name={isFav ? 'heartFilled' : 'heart'} size={20} />
               </button>
             </div>
           </div>
@@ -154,7 +155,7 @@ function Detail() {
         {/* Cast */}
         {item.cast?.length > 0 && (
           <div className="cast-section">
-            <h3>🎭 Cast</h3>
+            <h3><Icon name="cast" size={18} /> Cast</h3>
             <div className="cast-grid">
               {item.cast.map((c, i) => (
                 <div key={i} className="cast-card">
@@ -162,7 +163,7 @@ function Detail() {
                      <img className="cast-photo" src={c.photo} alt={c.name} />
                    ) : (
                      <div className="cast-photo-placeholder">
-                       🎭
+                       <Icon name="user" size={24} />
                      </div>
                    )}
                   <div className="cast-name">{c.name}</div>
@@ -176,7 +177,7 @@ function Detail() {
         {/* Seasons & Episodes for TV */}
         {!isMovie && item.seasons?.length > 0 && (
           <div className="seasons-section">
-            <h3>📺 Seasons</h3>
+            <h3><Icon name="tv" size={18} /> Seasons</h3>
             <div className="season-list">
               {item.seasons.map((s) => (
                 <button
@@ -203,7 +204,7 @@ function Detail() {
                        <img className="episode-still" src={ep.still_path} alt={ep.name} />
                      ) : (
                        <div className="episode-still-placeholder">
-                         📺
+                         <Icon name="tv" size={24} />
                        </div>
                      )}
                     <div className="episode-info">

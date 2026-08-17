@@ -6,12 +6,13 @@ import Detail from './pages/Detail';
 import Favorites from './pages/Favorites';
 import Player from './pages/Player';
 import Settings from './pages/Settings';
+import Icon from './components/Icons';
 
 const NAV_ITEMS = [
-  { to: '/', label: 'Home', icon: '🏠', match: (p) => p === '/' },
-  { to: '/search', label: 'Search', icon: '🔍', match: (p) => p.startsWith('/search') },
-  { to: '/favorites', label: 'My List', icon: '❤️', match: (p) => p === '/favorites' },
-  { to: '/settings', label: 'Settings', icon: '⚙️', match: (p) => p === '/settings' },
+  { to: '/', label: 'Home', icon: 'home', match: (p) => p === '/' },
+  { to: '/search', label: 'Search', icon: 'search', match: (p) => p.startsWith('/search') },
+  { to: '/favorites', label: 'My List', icon: 'heart', match: (p) => p === '/favorites' },
+  { to: '/settings', label: 'Settings', icon: 'settings', match: (p) => p === '/settings' },
 ];
 
 // Inline SVG noise turbulence as a data URI for the grain overlay
@@ -74,7 +75,7 @@ function App() {
       {/* Desktop Sidebar (hidden on mobile/tablet) */}
       <aside className="sidebar">
         <div className="sidebar-brand">
-          <span className="sidebar-brand-heart">💕</span>MomFlix
+          <span className="sidebar-brand-heart"><Icon name="heart" size={18} /></span>MomFlix
         </div>
         <nav className="sidebar-nav">
           {NAV_ITEMS.map((item) => (
@@ -83,20 +84,20 @@ function App() {
               to={item.to}
               className={`sidebar-link ${item.match(location.pathname) ? 'active' : ''}`}
             >
-              <span className="sidebar-icon">{item.icon}</span>
+              <span className="sidebar-icon"><Icon name={item.icon} size={18} /></span>
               {item.label}
             </Link>
           ))}
         </nav>
         <div className="sidebar-footer">
-          Made for you, Mom 💗
+          Made for you, Mom <Icon name="heart" size={12} />
         </div>
       </aside>
 
       {/* Top Navbar (mobile + tablet) */}
       <nav className="navbar">
         <Link to="/" className="navbar-brand">
-          <span className="brand-heart">💕</span>Mom<span>Flix</span>
+          <span className="brand-heart"><Icon name="heart" size={16} /></span>Mom<span>Flix</span>
         </Link>
         <div className="nav-links">
           {NAV_ITEMS.map((item) => (
@@ -105,7 +106,7 @@ function App() {
               to={item.to}
               className={`nav-link ${item.match(location.pathname) ? 'active' : ''}`}
             >
-              {item.icon} {item.label}
+              <Icon name={item.icon} size={16} /> {item.label}
             </Link>
           ))}
         </div>
@@ -145,7 +146,7 @@ function App() {
             ref={(el) => (itemRefs.current[i] = el)}
             className={`bottom-nav-item ${item.match(location.pathname) ? 'active' : ''}`}
           >
-            <span className="bottom-nav-icon">{item.icon}</span>
+            <span className="bottom-nav-icon"><Icon name={item.icon} size={20} /></span>
             <span className="bottom-nav-label">{item.label}</span>
           </Link>
         ))}

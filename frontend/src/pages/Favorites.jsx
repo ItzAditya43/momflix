@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getFavorites, removeFavorite } from '../api';
+import Icon from '../components/Icons';
 
 function Favorites() {
   const [favorites, setFavorites] = useState([]);
@@ -40,15 +41,17 @@ function Favorites() {
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
       <div style={{ padding: '20px' }}>
         <div style={{ marginBottom: '24px' }}>
-          <h2 className="section-title" style={{ color: 'var(--text)', fontSize: '22px' }}>❤️ My Favorites</h2>
+          <h2 className="section-title" style={{ color: 'var(--text)', fontSize: '22px' }}>
+            <Icon name="heart" size={20} /> My Favorites
+          </h2>
         </div>
 
         {favorites.length === 0 ? (
           <div className="empty-state" style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text-muted)' }}>
             <h3 style={{ color: 'var(--text)', marginBottom: '12px' }}>No favorites yet</h3>
-            <p style={{ color: 'var(--text-muted)' }}>Browse movies and shows and click the ❤️ to save them here</p>
+            <p style={{ color: 'var(--text-muted)' }}>Browse movies and shows and click the <Icon name="heart" size={14} /> to save them here</p>
             <Link to="/" style={{ display: 'inline-block', marginTop: '20px', textDecoration: 'none', background: 'rgba(255, 94, 91, 0.2)', padding: '12px 24px', borderRadius: '25px', color: 'var(--primary)' }}>
-              🏠 Browse Now
+              <Icon name="home" size={16} /> Browse Now
             </Link>
           </div>
         ) : (
@@ -71,7 +74,7 @@ function Favorites() {
                     />
                   ) : (
                     <div style={{ width: '100%', height: 'auto', aspectRatio: '2/3', background: '#241633', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      🎬
+                      <Icon name="film" size={32} />
                     </div>
                   )}
                   <div style={{ padding: '12px 14px' }}>
@@ -104,7 +107,7 @@ function Favorites() {
                   }}
                   title="Remove from favorites"
                 >
-                  ❤️
+                  <Icon name="heartFilled" size={16} />
                 </button>
               </div>
             ))}

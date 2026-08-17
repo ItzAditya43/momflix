@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { search } from '../api';
+import Icon from '../components/Icons';
 
 const RECENT_KEY = 'momflix_recent_searches';
 const RECENT_MAX = 5;
@@ -190,7 +191,9 @@ function Search() {
     <div className="search-page" style={{ background: 'var(--bg)', minHeight: '100vh' }}>
       <form className="search-bar" onSubmit={handleSubmit} role="search" style={{ background: 'rgba(15, 30, 30, 0.8)', padding: '20px', borderRadius: '20px', marginBottom: '24px' }}>
         <div className="search-wrap" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-          <span className="search-icon-left" aria-hidden="true" style={{ color: 'var(--text-muted)', marginRight: '12px' }}>🔍</span>
+          <span className="search-icon-left" aria-hidden="true" style={{ color: 'var(--text-muted)', marginRight: '12px' }}>
+            <Icon name="search" size={20} />
+          </span>
           <input
             className="search-input"
             type="text"
@@ -228,7 +231,7 @@ function Search() {
                 fontSize: '20px',
               }}
             >
-              ✕
+              <Icon name="close" size={16} />
             </button>
           )}
         </div>
@@ -271,7 +274,7 @@ function Search() {
                   fontSize: '14px',
                 }}
               >
-                ✕
+                <Icon name="close" size={12} />
               </button>
             </span>
           ))}
@@ -389,11 +392,11 @@ function Search() {
                   />
                 ) : (
                   <div className="card-poster-placeholder" style={{ width: '100%', height: 'auto', aspectRatio: '2/3', background: '#241633', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '44px' }}>
-                    🎬
+                    <Icon name="film" size={40} />
                   </div>
                 )}
                 <div className="card-rating" style={{ position: 'absolute', top: '10px', right: '10px', background: 'rgba(20, 12, 30, 0.75)', backdropFilter: 'blur(6px)', padding: '4px 9px', borderRadius: '999px', fontSize: '12px', fontWeight: '700', color: 'var(--gold)', border: '1px solid rgba(255, 210, 122, 0.3)' }}>
-                  ★ {item.vote_average?.toFixed(1)}
+                  <Icon name="star" size={10} /> {item.vote_average?.toFixed(1)}
                 </div>
                 <div className="card-body" style={{ padding: '12px 14px 14px' }}>
                   <div className="card-title" style={{ fontSize: '15px', fontWeight: '700', marginBottom: '4px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title}</div>
@@ -410,7 +413,9 @@ function Search() {
       {/* Pre-search empty state when no recents */}
       {!searched && !loading && recent.length === 0 && (
         <div className="empty-state" style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text-muted)' }}>
-          <h3 style={{ color: 'var(--text)', marginBottom: '12px' }}>🔍 Search Movies & TV Shows</h3>
+          <h3 style={{ color: 'var(--text)', marginBottom: '12px' }}>
+            <Icon name="search" size={20} /> Search Movies & TV Shows
+          </h3>
           <p style={{ color: 'var(--text-muted)' }}>Type something above to find what you want to watch</p>
         </div>
       )}

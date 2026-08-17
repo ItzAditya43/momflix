@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getMovie, getTV, updateContinueWatching } from '../api';
+import Icon from '../components/Icons';
 
 function Player() {
   const { id, season, episode } = useParams();
@@ -78,7 +79,7 @@ function Player() {
           style={{ width: '100%', height: '320px', border: 'none' }}
         />
         <button className="custom-fullscreen-btn" onClick={handleFullscreen} style={{ position: 'absolute', top: '10px', right: '10px', background: 'rgba(255, 94, 91, 0.3)', color: 'var(--text)', borderRadius: '50px', width: '40px', height: '40px', border: 'none', cursor: 'pointer' }}>
-          ⛶
+          <Icon name="expand" size={20} />
         </button>
       </div>
 
@@ -94,7 +95,7 @@ function Player() {
           Autoplay
         </label>
         <label className="player-control-label" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)' }}>
-          Subtitles:
+          <Icon name="subtitles" size={16} /> Subtitles:
           <select value={subtitle} onChange={(e) => setSubtitle(e.target.value)} style={{ padding: '8px 12px', background: 'rgba(255, 255, 255, 0.06)', border: '1px solid var(--glass-border)', borderRadius: '8px', color: 'var(--text)', fontSize: '15px' }}>
             <option value="en">English</option>
             <option value="es">Spanish</option>
@@ -121,7 +122,7 @@ function Player() {
             )}
           </div>
           <Link to={`/${isMovie ? 'movie' : 'tv'}/${id}`} className="btn btn-secondary" style={{ marginTop: '12px', background: 'rgba(255, 255, 255, 0.08)', color: 'var(--text)' }}>
-            📋 Details
+            <Icon name="list" size={16} /> Details
           </Link>
           <p className="player-overview" style={{ color: 'var(--text-muted)', fontSize: '17px', lineHeight: 1.7, marginBottom: '0' }}>{item.overview}</p>
         </div>

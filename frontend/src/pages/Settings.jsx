@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { clearContinueWatching, clearFavorites, clearAllData } from '../api';
+import Icon from '../components/Icons';
 
 function ConfirmModal({ title, text, onConfirm, onCancel, danger }) {
   return (
@@ -52,9 +53,9 @@ function Settings() {
   const handleClearContinueWatching = async () => {
     try {
       await clearContinueWatching();
-      showToast('Continue watching history cleared', 'OK');
+      showToast('Continue watching history cleared', 'check');
     } catch (err) {
-      showToast('Failed to clear data', 'ERR');
+      showToast('Failed to clear data', 'alert');
     }
     setModal(null);
   };
@@ -62,9 +63,9 @@ function Settings() {
   const handleClearFavorites = async () => {
     try {
       await clearFavorites();
-      showToast('All favorites cleared', 'OK');
+      showToast('All favorites cleared', 'check');
     } catch (err) {
-      showToast('Failed to clear favorites', 'ERR');
+      showToast('Failed to clear favorites', 'alert');
     }
     setModal(null);
   };
@@ -72,9 +73,9 @@ function Settings() {
   const handleClearAll = async () => {
     try {
       await clearAllData();
-      showToast('All data cleared successfully', 'OK');
+      showToast('All data cleared successfully', 'check');
     } catch (err) {
-      showToast('Failed to clear data', 'ERR');
+      showToast('Failed to clear data', 'alert');
     }
     setModal(null);
   };
@@ -97,7 +98,9 @@ function Settings() {
               borderRadius: '8px', padding: '12px 20px', color: 'var(--text)',
               display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px'
             }}>
-              <span style={{ color: 'var(--primary)' }}>{t.icon}</span>
+              <span style={{ color: 'var(--primary)' }}>
+                <Icon name={t.icon} size={16} />
+              </span>
               {t.message}
             </div>
           ))}
@@ -117,14 +120,18 @@ function Settings() {
 
       <div style={{ marginBottom: '32px' }}>
         <div style={{ marginBottom: '16px' }}>
-          <h2 style={{ color: 'var(--text)', fontSize: '24px', marginBottom: '16px' }}>Settings</h2>
+          <h2 style={{ color: 'var(--text)', fontSize: '24px', marginBottom: '16px' }}>
+            <Icon name="settings" size={22} /> Settings
+          </h2>
         </div>
       </div>
 
       {/* Data Management */}
       <div style={{ marginBottom: '24px' }}>
         <div style={{ marginBottom: '12px' }}>
-          <h3 style={{ color: 'var(--text)', fontSize: '16px', marginBottom: '8px' }}>Data Management</h3>
+          <h3 style={{ color: 'var(--text)', fontSize: '16px', marginBottom: '8px' }}>
+            <Icon name="database" size={16} /> Data Management
+          </h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>
             Manage your local data including favorites and watch history. These actions cannot be undone.
           </p>
@@ -135,7 +142,7 @@ function Settings() {
             color: 'var(--text)', padding: '12px 24px', borderRadius: '12px',
             cursor: 'pointer', transition: 'all 0.25s ease', width: '100%'
           }} onClick={() => openModal('Clear Watch History', 'This will remove all your continue watching progress. Your favorites will be kept.', false, handleClearContinueWatching)}>
-            Clear Watch History
+            <Icon name="clock" size={16} /> Clear Watch History
           </button>
 
           <button style={{
@@ -143,7 +150,7 @@ function Settings() {
             color: 'var(--text)', padding: '12px 24px', borderRadius: '12px',
             cursor: 'pointer', transition: 'all 0.25s ease', width: '100%'
           }} onClick={() => openModal('Clear Favorites', 'This will remove all your saved favorites. Watch history will be kept.', false, handleClearFavorites)}>
-            Clear All Favorites
+            <Icon name="heart" size={16} /> Clear All Favorites
           </button>
 
           <button style={{
@@ -151,7 +158,7 @@ function Settings() {
             color: 'var(--primary)', padding: '12px 24px', borderRadius: '12px',
             cursor: 'pointer', transition: 'all 0.25s ease', width: '100%'
           }} onClick={() => openModal('Clear All Data', 'This will permanently delete ALL your data including favorites and watch history. This cannot be undone!', true, handleClearAll)}>
-            Clear Everything
+            <Icon name="trash" size={16} /> Clear Everything
           </button>
         </div>
       </div>
@@ -159,13 +166,15 @@ function Settings() {
       {/* About */}
       <div style={{ marginTop: '32px' }}>
         <div style={{ marginBottom: '12px' }}>
-          <h3 style={{ color: 'var(--text)', fontSize: '16px', marginBottom: '8px' }}>About MomFlix</h3>
+          <h3 style={{ color: 'var(--text)', fontSize: '16px', marginBottom: '8px' }}>
+            <Icon name="info" size={16} /> About MomFlix
+          </h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>
             A beautiful streaming app made with love. Browse movies and TV shows, save favorites, and pick up where you left off.
           </p>
         </div>
         <div style={{ fontSize: 14, color: 'var(--text-muted)' }}>
-          Made for you, Mom
+          Made for you, Mom <Icon name="heart" size={12} />
         </div>
       </div>
     </div>

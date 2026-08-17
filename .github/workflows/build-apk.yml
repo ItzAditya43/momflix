@@ -1,0 +1,94 @@
+name: Build APK and Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Cache Rust dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            frontend/src-tauri/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('frontend/src-tauri/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Install Tauri CLI
+        working-directory: frontend
+        run: npm install -D @tauri-apps/cli@^2
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Initialize Android project
+        working-directory: frontend
+        run: npx tauri android init
+
+      - name: Build Android APK
+        working-directory: frontend
+        run: npx tauri android build --apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: momflix-apk
+          path: frontend/src-tauri/gen/android/app/build/outputs/apk/universal/release/*.apk
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.0
+          name: MomFlix v1.0.0
+          body: |
+            MomFlix Android APK
+
+            ## Features
+            - Browse trending movies and TV shows
+            - Search for any content
+            - Save favorites locally on device
+            - Continue watching progress stored locally
+            - All data stored on-device (localStorage)
+            - Black/white SVG icons (no emojis)
+            - Direct TMDB API integration (no backend needed)
+
+            ## Installation
+            Download the APK and install on your Android device.
+          files: frontend/src-tauri/gen/android/app/build/outputs/apk/universal/release/*.apk
+          generate_release_notes: true

@@ -6,5 +6,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5432,
+    strictPort: true,
   },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+  },
+  clearScreen: false,
+  envPrefix: ['VITE_', 'TAURI_'],
 })
